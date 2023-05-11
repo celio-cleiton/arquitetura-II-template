@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import { UserController } from './controller/UserController'
 import { AccountController } from './controller/AccountController'
+import { userRouter } from './router/UserRouter'
 
 const app = express()
 
@@ -12,12 +13,13 @@ app.listen(3003, () => {
     console.log(`Servidor rodando na porta ${3003}`)
 })
 
-const userController = new UserController()
+
+app.use("/users", userRouter)
+
+
+
+
 const accountController = new AccountController()
-
-app.get("/users", userController.getUsers)
-app.post("/users", userController.createUser)
-
 app.get("/accounts", accountController.getAccounts)
 app.get("/accounts/:id/balance", accountController.getAccountBalance)
 app.post("/accounts", accountController.createAccount)
